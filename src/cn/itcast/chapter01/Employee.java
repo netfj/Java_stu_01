@@ -19,6 +19,7 @@ public class Employee {
 	
 	// 打印信息
 	public void printEmployee() {
+		System.out.println("-----------------\n姓名："+name);
 		System.out.println("年龄："+age);
 	}
 }
