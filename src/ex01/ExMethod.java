@@ -33,7 +33,7 @@ public class ExMethod {
 	}
 	
 	public static String t(String x, String y) {
-		return x + y;
+		return x + y ;
 	}
 
 }
