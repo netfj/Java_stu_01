@@ -14,6 +14,8 @@ class Animal{
 
 public class Ex15 {
 	
+	
+	
 	public static void main(String[] args) {
 		Animal a = new Animal();
 				
@@ -26,12 +28,8 @@ public class Ex15 {
 		String[] str3 = {"¹·","ÍúÍúÍú~~~","´ó¹ÇÍ·"};
 		Animal d = new Animal(str3);
 		
-		
-		
-		
-		
 	}
-	
+
 	
 
 }
