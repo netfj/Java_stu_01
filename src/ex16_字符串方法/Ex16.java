@@ -74,7 +74,30 @@ class Test01 {
 		
 		
 		System.out.println("\n-- 字符串 第1次出现的位置 -----------");
-		
+		System.out.println("12345abcde".indexOf("1"));
+		System.out.println("12345abcde".indexOf("a"));
 
+		System.out.println("\n-- 返回在此字符串中第一次出现指定字符处的索引，从指定的索引开始搜索。----");
+		System.out.println("0a23a567a9".indexOf("a",0));
+		System.out.println("0a23a567a9".indexOf("a",1));
+		System.out.println("0a23a567a9".indexOf("a",5));
+		System.out.println("0a23a567a9".indexOf("a",50));
+		
+		System.out.println("\n-- 最后一次出现处 --");
+		System.out.println("0ab3ab67ab0".lastIndexOf("a"));
+		System.out.println("0ab3ab67a90".lastIndexOf("ab"));
+		
+		
+		System.out.println("\n-- 字符串 拆分 --");
+		String str01 = "Welcome-to-Runoob";
+		for (String re : str01.split("-")){
+			System.out.println(re);
+		}
+		
+		
+		
+		
+		
+		
 	}
 }
