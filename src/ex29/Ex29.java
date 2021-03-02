@@ -1,7 +1,9 @@
 package ex29;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+
 
 public class Ex29 {
 	public static void main(String[] args) {
@@ -52,11 +54,41 @@ public class Ex29 {
 		list2.add("str3");
 		list2.add("str4");
 		System.out.println(list2);
+		
 		System.out.println(list2.iterator().hasNext());
 		
+		Iterator lter	= list2.iterator();
+		System.out.println(lter.hasNext());
+		while (lter.hasNext()) {
+			System.out.println(lter.next());
+		}
+		
+		System.out.println("**************");
+		for (Object object : list2) {
+			System.out.println(object);
+			
+		}
 		
 		
+		System.out.println("#################");
+		String[] st = {"1","2","3"};
+		for (String s:st) {
+			System.out.println(s);
+			s = "New!";
+			System.out.println(s);
+		}
+		System.out.println(st[0]+st[1]+st[2]);
+
 		
+		
+		System.out.println("-- ## --");
+		
+		for (int i = 0; i < st.length; i++) {
+			System.out.println(st[i]);
+			st[i] = "new";
+			System.out.println(st[i]);
+		}
+		System.out.println(st[0]+st[1]+st[2]);
 		
 		
 		
