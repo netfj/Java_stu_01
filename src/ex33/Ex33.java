@@ -8,7 +8,7 @@ import java.io.OutputStream;
 
 public class Ex33 {
 	public static void main(String[] args) throws IOException {
-		test01("复制文件");
+		test01("复制文件：逐个字符形式");
 		
 
 	}
