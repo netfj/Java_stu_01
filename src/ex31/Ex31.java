@@ -26,7 +26,7 @@ public class Ex31 {
 	
 	
 	public static void main(String[] args) {
-		Map map = new HashMap();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("1", "Jack1");
 		map.put("2", "Jack2");
 		map.put("3", "Jack3");
