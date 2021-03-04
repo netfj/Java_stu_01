@@ -41,6 +41,4 @@ public class Ex33 {
 		System.out.println("Use time: " + (endTime - beginTime) + " hm");
 	}
 
-	
-
 }
