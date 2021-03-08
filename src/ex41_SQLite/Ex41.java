@@ -10,6 +10,7 @@ public class Ex41 {
 	private static Connection connectionDatabase = null;
 	private static Statement databseStatement = null;
 	private static ResultSet resultSet_sqlExecuteQuery = null;
+	private static HashMap map_sqlExecuteQuery_MetaData = new HashMap();
 	
 	public static void main(String[] args) throws SQLException {
 		
@@ -30,6 +31,12 @@ public class Ex41 {
 		String databseStatementState = (databseStatement.isClosed())?"接口状态：关闭":"接口状态：保持有效";
 		System.out.println(databseStatementState);
 		
+		test();	//测试模块
+	}
+	
+	
+	public static void test() throws SQLException {
+		
 		System.out.println("\n== test XX =========");
 //		test01();
 //		test02();
@@ -47,8 +54,8 @@ public class Ex41 {
 		
 		
 		
+		
 	}
-	
 	
 	public static boolean databaseLink() {
 		System.out.println("-- 打开数据库 (没有则创建) -----");
@@ -149,33 +156,83 @@ public class Ex41 {
 		}
 	}
 	
-	public static void sqlExecuteQuery_MetaData() throws SQLException {
-		System.out.println(" -- sqlExecuteQuery_MetaData() ： 解析表的结构, 返回 map");
-		ResultSetMetaData rSetMetaData = resultSet_sqlExecuteQuery.getMetaData();
-		int n = rSetMetaData.getColumnCount();
-		Map<String,String> mapMetaData = new HashMap<String, String>();
+	public static boolean sqlExecuteQuery_MetaData() throws SQLException {
+		System.out.println(" -- sqlExecuteQuery_MetaData() ： 解析表的结构, 返回 map_sqlExecuteQuery_MetaData");
+		/*
+		 * 返回值：集合 map_sqlExecuteQuery_MetaData，包含：
+		 * 				表的字段数，字段名称，字段类型名称（TEXT,INT,等等），字段类型（原为 int 返回时，为了数据一致性，转换成 String）
+		 * 返回值结构：
+		 * {
+		 *  intColumnCount= int值, 
+		 *  arrayStringsTableName=  String[] 数组,
+		 *  arrayStringsColumnName=  String[] 数组,
+		 *  arrayStringsColumnTypeName= String[] 数组, 
+		 *  arrayStringsColumnType= String[] 数组, 
+		 *  } 
+		 *  读取方法：数组取出后，强制转换成 String[]
+		 *  	String[] strings = (String[]) map_sqlExecuteQuery_MetaData.get("arrayStringsTableName")
+		 *  	取值：strings[0] / strings[i]
+		 */
 		
-		
-		for (int i = 1; i <= rSetMetaData.getColumnCount(); i++) {
-			
-			
-			
-			System.out.print("【字段" + i + "】ColumnName: " + rSetMetaData.getColumnName(i));
-			System.out.print(" | ColumnLabel: "+ rSetMetaData.getColumnLabel(i));
-			System.out.print(" | ColumnTypeName: "+ rSetMetaData.getColumnTypeName(i));
-			System.out.print(" | ColumnType: "+ rSetMetaData.getColumnType(i));
-			System.out.print(" | ColumnClassName: "+ rSetMetaData.getColumnClassName(i));
-			System.out.print(" | ColumnDisplaySize: "+ rSetMetaData.getColumnDisplaySize(i));
-			System.out.print(" | TableName: "+ rSetMetaData.getTableName(i));
-			System.out.print(" | Precision(精度): "+ rSetMetaData.getPrecision(i));
-			System.out.print(" | Scale(比例): "+ rSetMetaData.getScale(i));
-			System.out.print(" | SchemaName(模式名称): "+ rSetMetaData.getSchemaName(i));
-			
-			System.out.println("\n");
+		if (resultSet_sqlExecuteQuery == null) {
+			System.out.println("sqlExecuteQuery_MetaData() : 没有执行查询，sqlExecuteQuery_MetaData 为空！");
+			return false ;
 		}
 		
+		ResultSetMetaData rSetMetaData = resultSet_sqlExecuteQuery.getMetaData();
+		
+		//字段数
+		int intColumnCount = rSetMetaData.getColumnCount();
+		map_sqlExecuteQuery_MetaData.put("intColumnCount", intColumnCount);
+				
+		
+		String[] arrayStringsTableName = new String[intColumnCount - 1];	//表名
+		String[] arrayStringsColumnName =  new String[intColumnCount - 1];	//字段名
+		String[] arrayStringsColumnTypeName =  new String[intColumnCount - 1];	//字段类型名称
+		String[] arrayStringsColumnType = new String[intColumnCount -1];
+		
+		for (int i = 1; i < intColumnCount; i++) {
+			arrayStringsTableName[i-1] = rSetMetaData.getTableName(i);
+			arrayStringsColumnName[i-1] = rSetMetaData.getColumnName(i);
+			arrayStringsColumnTypeName[i-1] = rSetMetaData.getColumnTypeName(i);
+			arrayStringsColumnType[i-1] = rSetMetaData.getColumnType(i) + "";
+		}
+		
+		map_sqlExecuteQuery_MetaData.put("arrayStringsTableName", arrayStringsTableName);
+		map_sqlExecuteQuery_MetaData.put("arrayStringsColumnName", arrayStringsColumnName);
+		map_sqlExecuteQuery_MetaData.put("arrayStringsColumnTypeName", arrayStringsColumnTypeName);
+		map_sqlExecuteQuery_MetaData.put("arrayIntegersColumnType", arrayStringsColumnType);
+		
+//		for (int i = 1; i <= rSetMetaData.getColumnCount(); i++) {
+//			System.out.print("【字段" + i + "】ColumnName: " + rSetMetaData.getColumnName(i));
+//			System.out.print(" | ColumnLabel: "+ rSetMetaData.getColumnLabel(i));
+//			System.out.print(" | ColumnTypeName: "+ rSetMetaData.getColumnTypeName(i));
+//			System.out.print(" | ColumnType: "+ rSetMetaData.getColumnType(i));
+//			System.out.print(" | ColumnClassName: "+ rSetMetaData.getColumnClassName(i));
+//			System.out.print(" | ColumnDisplaySize: "+ rSetMetaData.getColumnDisplaySize(i));
+//			System.out.print(" | TableName: "+ rSetMetaData.getTableName(i));
+//			System.out.print(" | Precision(精度): "+ rSetMetaData.getPrecision(i));
+//			System.out.print(" | Scale(比例): "+ rSetMetaData.getScale(i));
+//			System.out.print(" | SchemaName(模式名称): "+ rSetMetaData.getSchemaName(i));
+//			System.out.println("\n");
+//		}
+		
+//		System.out.println(map_sqlExecuteQuery_MetaData);
+//		printArrayStrings((String[]) map_sqlExecuteQuery_MetaData.get("arrayStringsTableName"),"arrayStringsTableName");
+//		printArrayStrings((String[]) map_sqlExecuteQuery_MetaData.get("arrayStringsColumnName"), "arrayStringsColumnName");
+//		printArrayStrings((String[]) map_sqlExecuteQuery_MetaData.get("arrayStringsColumnTypeName"), "arrayStringsColumnTypeName");
+//		printArrayStrings((String[]) map_sqlExecuteQuery_MetaData.get("arrayIntegersColumnType"), "arrayIntegersColumnType");
+//		System.out.println(" # -- sqlExecuteQuery_MetaData() over");
+		return true;
 	}
 	
+	public static void printArrayStrings(String[] arrays, String arg) {
+		System.out.println(arg);
+		System.out.println("[" + arg + "]");
+		for (int i = 0; i < arrays.length; i++) {
+			System.out.println(arrays[i]);
+		}
+	}
 	
 	public static boolean tableCreate_OLD(String tableName){
 		System.out.println(tableName);
