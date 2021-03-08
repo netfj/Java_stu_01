@@ -1,5 +1,9 @@
 package ex40;
 
+/*
+ * 引入其它类的方法
+ */
+
 import ex37_File.Ex37;
 
 
