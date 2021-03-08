@@ -217,7 +217,7 @@ public class Ex41 {
 //			System.out.println("\n");
 //		}
 		
-//		System.out.println(map_sqlExecuteQuery_MetaData);
+//		System.out.println(" # 下面打印map中的数组，map名："+map_sqlExecuteQuery_MetaData);
 //		printArrayStrings((String[]) map_sqlExecuteQuery_MetaData.get("arrayStringsTableName"),"arrayStringsTableName");
 //		printArrayStrings((String[]) map_sqlExecuteQuery_MetaData.get("arrayStringsColumnName"), "arrayStringsColumnName");
 //		printArrayStrings((String[]) map_sqlExecuteQuery_MetaData.get("arrayStringsColumnTypeName"), "arrayStringsColumnTypeName");
